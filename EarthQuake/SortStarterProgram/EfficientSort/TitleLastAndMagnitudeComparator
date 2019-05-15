@@ -1,0 +1,31 @@
+
+/**
+ *  In this class you should write the compare method that has two parameters, a QuakeEntry named q1 and a QuakeEntry named q2. This method should compare the last word in the title of q1 and q2. If q1’s last word comes before q2’s last word in alphabetical order, then this method should return a negative integer. If q1’s last word comes after q2’s last word, then this method should return a positive integer. If q1’s last word is the same as q2’s last word, then this method should compare the magnitude of the two earthquakes. If q1’s magnitude is less than q2’s magnitude, then this method should return a negative number. If q1’s magnitude is greater than q2’s magnitude, then this method should return a positive integer. Otherwise, this method should return 0.
+ * 
+ * @author (Vidhi Javiya) 
+ * @version (April 2019)
+ */
+
+import java.util.*;
+public class TitleLastAndMagnitudeComparator implements Comparator<QuakeEntry> {
+
+    public int compare(QuakeEntry qe1, QuakeEntry qe2) {
+       
+        String s1 = qe1.getInfo();
+        String s2 = qe2.getInfo();
+        String w1 = s1.substring(s1.lastIndexOf (' '), s1.length());
+        String w2 = s2.substring(s2.lastIndexOf(' '),s2.length());
+        
+        if(w1.compareTo(w2)>0){
+        return 1; 
+        }
+        if(w1.compareTo(w2)<0){return -1;}
+        
+       
+        
+         return Double.compare(qe1.getMagnitude(), qe2.getMagnitude());
+        }
+        
+        }
+
+
