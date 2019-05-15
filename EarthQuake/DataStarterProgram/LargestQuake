@@ -1,0 +1,70 @@
+
+/**
+ * Write a description of LargestQuake here.
+ * 
+ * @author Vidhi Javiya
+ * @version (April2019)
+ */
+import java.util.*;
+public class LargestQuake {
+    public int indexOfLargest(ArrayList<QuakeEntry> data){
+        double maxmag = 0.0; 
+        QuakeEntry maxQuake=new QuakeEntry(0.0,0.0,0.0,"",0.0);
+
+        // index location in data of the earthquake with the largest magnitude. You
+        //should test out this method by adding code to the method findLargestQuakes 
+        //to print the index location of the largest magnitude earthquake 
+        for(QuakeEntry qe:data){
+            double magnitude = qe.getMagnitude();
+            System.out.println(magnitude);
+            if(magnitude>maxmag)
+            {
+                maxmag=magnitude;
+                maxQuake=qe;
+            }
+
+        } 
+        return data.indexOf(maxQuake);
+    }
+
+    public ArrayList<QuakeEntry> getLargest(ArrayList<QuakeEntry>quakeData,int howMany){
+        ArrayList<QuakeEntry> answer = new ArrayList<QuakeEntry>();
+
+    
+        ArrayList<QuakeEntry> copy=new ArrayList<QuakeEntry>(quakeData);
+        if(quakeData.size()<howMany){howMany=quakeData.size();}
+        
+        
+        
+        for(int i=0;i<howMany; i++){
+            double maxmag = 0.0;
+            QuakeEntry MaxQe = new QuakeEntry(0.0,0.0,0.0,"",0.0);
+             for(int k =1;k<copy.size();k++){
+                  QuakeEntry quake = copy.get(k);
+                double mag = quake.getMagnitude();
+                if(mag>maxmag){
+                    maxmag=mag;
+                    MaxQe =quake;}
+            }
+            answer.add(MaxQe);
+            copy.remove(MaxQe);
+        }
+        return answer;}
+    //now delete MaxQe from list and repet the process
+
+    public void findLargestQuakes(){
+        EarthQuakeParser parser = new EarthQuakeParser();
+        String source = "data/nov20quakedata.atom";
+        //  String source = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);
+        System.out.println("read data for "+list.size());
+        // for(QuakeEntry qe: list){System.out.println(qe);}
+
+        int largest = indexOfLargest(list);
+        QuakeEntry large  = list.get(largest);
+        double mag = large.getMagnitude();
+        ArrayList<QuakeEntry> data = getLargest(list,50);
+        for(QuakeEntry qe : data){System.out.println(qe);}
+        // System.out.println("Earthquake located at  "+largest + "index position is  largest"+ mag  );
+    }
+}
