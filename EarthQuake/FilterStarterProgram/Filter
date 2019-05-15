@@ -1,0 +1,14 @@
+
+/**
+ * The interface Filter, which has one method signature named satisfies. Note that satisfies is not defined.
+ * Any class you write that implements Filter must provide the satisfies method.
+ * 
+ * @author Vidhi Javiya
+ * @version April 2019
+ */
+public interface Filter
+{
+    public  boolean satisfies(QuakeEntry qe); 
+    
+    public String getName();
+}
