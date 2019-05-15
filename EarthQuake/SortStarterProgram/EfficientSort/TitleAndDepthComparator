@@ -1,0 +1,26 @@
+
+/**
+ *  TitleAndDepthComparator class that implements a Comparator of type QuakeEntry. In this class you should write the compare method that has two parameters, a QuakeEntry named q1 and a QuakeEntry named q2. This method should compare the title of q1 and q2. If q1’s title comes before q2’s title in alphabetical order, then this method should return a negative integer. If q1’s title comes after q2’s title, then this method should return a positive integer. If q1’s title is the same as q2’s title, then this method should compare the depth of the two earthquakes. If q1’s depth is less than q2’s depth, then this method should return a negative number. If q1’s depth is greater than q2’s depth, then this method should return a positive integer. Otherwise, this method should return 0.
+ * 
+ * @author (Vidhi Javiya) 
+ * @version (April 2019)
+ */
+import java.util.*;
+
+
+
+
+public class TitleAndDepth implements Comparator<QuakeEntry> {
+    public int compare(QuakeEntry qe1, QuakeEntry qe2) {
+       
+        String s1 = qe1.getInfo();
+        String s2 = qe2.getInfo();
+        
+        if(s1.compareTo(s2)>0){
+        return 1; 
+        }
+        if(s1.compareTo(s2)<0){return -1;}
+        return Double.compare(qe1.getDepth(), qe2.getDepth());
+        }
+        
+        }
