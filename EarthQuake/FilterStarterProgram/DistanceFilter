@@ -1,0 +1,27 @@
+
+/**
+ * This class should include private instance variables for a location and a maximum distance, a constructor to initialize those variables, and a satisfies method that returns true if a QuakeEntry’s distance from the given location is less than the specified maximum distance. Otherwise it should return false.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class DistanceFilter implements Filter {
+private Location loc;
+private double distance;
+
+public DistanceFilter(Location name,double dis){
+loc=name;
+distance = dis;
+
+}
+
+public boolean satisfies(QuakeEntry qe){
+return((qe.getLocation().distanceTo(loc))/1000<distance);
+
+}
+public String getName(){
+
+return "Distance";
+}
+
+}
