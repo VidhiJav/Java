@@ -1,0 +1,31 @@
+
+/**
+ *  This class should include private instance variables for a minimum and maximum 
+ *  magnitude, a constructor to initialize those variables, and a satisfies
+ *  method that returns true if a QuakeEntry’s magnitude is between the
+ *  minimum and maximum magnitudes, or equal to one of them. Otherwise it 
+ *  
+ *  should return false.
+ * 
+ * @author (Vidhi Javiya)
+ * @version (April 2019)
+ */
+public class MagnitudeFilter implements Filter{
+private double minMag;
+private double maxMag;
+ public MagnitudeFilter(double min,double max){
+    minMag = min;
+    maxMag = max;
+    }
+ public boolean satisfies(QuakeEntry qe){
+     return  (qe.getMagnitude()>= minMag && qe.getMagnitude()<=maxMag);  
+  
+   
+    }
+    public String getName(){
+
+return "Magnitude";
+}
+
+ 
+}
