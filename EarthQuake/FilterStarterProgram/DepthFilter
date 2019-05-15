@@ -1,0 +1,27 @@
+
+/**
+ * This class should include private instance variables for a minimum and maximum depth, a constructor to initialize those variables, and a satisfies method that returns true if a QuakeEntry’s depth is between the minimum and maximum depths, or equal to one of them. Otherwise it should return false.
+ * 
+ * @author (Vidhi Javiya)
+ * @version (April 2019)
+ */
+public class DepthFilter implements Filter {
+private double minDep;
+private double maxDep;
+
+public DepthFilter(double min,double max){
+minDep = min;
+maxDep = max;
+}
+
+public boolean satisfies(QuakeEntry qe){
+ if(qe.getDepth()>= minDep && qe.getDepth()<=maxDep)  
+    return true;
+    else return false;
+}
+public String getName(){
+
+return "Depth";
+}
+
+}
