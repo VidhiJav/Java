@@ -1,0 +1,44 @@
+
+/**
+ *  This class should include two private instance variables for 1) a String representing the type of request that indicates where to search in the title and has one of three values: (“start”, ”end”, or “any”), and 2) a String indicating the phrase to search for in the title of the earthquake (Note the title of the earthquake can be obtained through the getInfo method). This class also has a constructor to initialize those variables, and a satisfies method that returns true if the phrase is found at the requested location in the title. If the phrase is not found, this method should return false.
+ * 
+ * @author (Vidhi Javiya)
+ * @version (April 2019)
+ */
+public class PhraseFilter implements Filter {
+    private String request;
+    private char phrase;
+
+    public PhraseFilter(String where,char info){
+        request = where;
+        phrase=info;
+    }
+
+    public boolean satisfies(QuakeEntry qe){
+        String title= qe.getInfo();
+        int last = title.length()-1;
+        if (request=="end"){
+            if(title.charAt(last)==phrase){
+                return true;}else
+            {return false;}
+
+        }
+
+        else if(request=="start"){
+            if(title.charAt(0)==(phrase)){ return true;}else
+            {return false;}
+        }
+
+        else if(request=="any"){}
+
+        if(title.indexOf(phrase) != -1){ return true;}else
+        {return false;}
+
+    }
+     public String getName(){
+
+          return "Phrase";
+}
+
+}
+
