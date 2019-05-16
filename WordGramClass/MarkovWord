@@ -1,0 +1,76 @@
+
+/**
+ * MarkovWord class that works for any number of words and uses the WordGram
+ * class to handle those words.
+ * @author (Vidhi Javiya) 
+ * @version (May 2019)
+ */
+import java.util.*;
+public class MarkovWord  implements IMarkovModel{
+
+    private String[] myText;
+    private Random myRandom;
+    private int myOrder;
+
+    public MarkovWord(int num){
+        myRandom = new Random();
+        myOrder = num;
+    }
+
+    public void setRandom(int seed) {
+        myRandom = new Random(seed);
+    }
+
+    public void setTraining(String text){
+        myText = text.split("\\s+");
+    }
+
+    private int indexOf(String[] words,WordGram target, int start){
+        for (int i=start;i<words.length-myOrder;i++) {
+            WordGram wg = new WordGram(words,i,myOrder);
+            if (wg.equals(target)) return i;
+        }
+
+        return -1;
+    }
+
+    private ArrayList<String> getFollows(WordGram kgram){
+    int index = indexOf(myText,kgram,0);
+    ArrayList<String> list = new ArrayList<String>();
+    while(index != -1){
+      list.add(myText[index+myOrder]);
+      index= indexOf(myText,kgram,index+1);
+    
+    }
+    return list;
+    }
+
+    public String getRandomText(int numWords){
+      
+        if (myText == null){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+      
+        int index = myRandom.nextInt(myText.length-myOrder);
+        WordGram key = new WordGram (myText,index,myOrder);
+       // System.out.println("key is  " +key);
+        sb.append(key.toString());
+        for(int k=0; k < numWords-myOrder; k++){
+            
+           ArrayList <String> follows = getFollows(key);
+            // System.out.println("key " + key+ "" + follows);
+           if(follows.size()==0 || follows == null){break;}
+         
+         index = myRandom.nextInt(follows.size());
+         
+         String next = follows.get(index);
+        
+         sb.append(next);
+         sb.append(" ");
+        
+                  key= key.shiftAdd(next);
+        }
+        return sb.toString();
+    }
+}
