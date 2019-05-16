@@ -1,0 +1,15 @@
+
+/**
+ * The IMarkovModel interface. It has two signatures: the void method setTraining that has one String parameter named text, and the method
+ * getRandomText that has one int parameter named numChars and returns a String.
+ * 
+* @author (Vidhi Javiya)
+ * @version (April 2019)
+ */
+
+public interface IMarkovModel {
+    public void setTraining(String text);
+    
+    public String getRandomText(int numChars);
+     public void setRandom(int seed);
+}
