@@ -1,0 +1,68 @@
+
+/**
+ * The class MarkovRunnerfor running your program to generate random text. 
+ * 
+ * @author (Vidhi Javiya) 
+ * @version (May 2019)
+ */
+import edu.duke.*;
+
+public class MarkovRunner {
+
+	public void runModel(IMarkovModel markov, String text, int size,int seed) {
+        
+        markov.setTraining(text);
+        markov. setRandom(seed);
+        System.out.println("running with " + markov);
+        for(int k=0; k < 3; k++){
+			String st= markov.getRandomText(size);
+			printOut(st);
+		}
+    
+        
+    }
+	
+	public void testHashMap() {
+        FileResource fr = new FileResource();
+		String st = fr.asString();
+		//String st = "yes-this-is-a-thin-pretty-pink-thistle";
+		//String st = "this is a test yes this is really a test yes a test this is wow";
+		//st = st.replace('\n', ' ');
+		int size = 50;
+		int seed = 65;
+		int order = 2;
+		EfficientMarkovWord ez = new EfficientMarkovWord(order);
+		runModel(ez, st, size, seed);
+		
+    }	
+    
+	public void testmarkovword()
+	 {
+        FileResource fr = new FileResource();
+	String st = fr.asString();
+		////String st = "yes-this-is-a-thin-pretty-pink-thistle";
+		//String st = "this is a test yes this is really a test yes a test this is wow";
+		st = st.replace('\n', ' ');
+		int size = 50;
+		int seed =844;
+		int order = 5;
+		MarkovWord ez = new MarkovWord(order);
+		runModel(ez, st, size, seed);
+		
+    }	
+    
+	public void printOut(String s){
+		String[] words = s.split("\\s+");
+		int psize = 0;
+		System.out.println("----------------------------------");
+		for(int k=0; k < words.length; k++){
+			System.out.print(words[k]+ " ");
+			psize += words[k].length() + 1;
+			if (psize > 60) {
+				System.out.println();
+				psize = 0;
+			}
+		}
+		System.out.println("\n----------------------------------");
+	}
+}
