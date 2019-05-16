@@ -1,0 +1,59 @@
+
+/**
+ * The abstract class AbstractMarkovModel that implements IMarkovModel
+ * 
+ * @author (Vidhi Javiya)
+ * @version (April 2019)
+ */
+
+import java.util.*;
+
+public abstract class AbstractMarkovModel implements IMarkovModel {
+    protected String myText;
+    protected Random myRandom;
+    
+    public AbstractMarkovModel() {
+        myRandom = new Random();
+    }
+    
+    public void setRandom(int seed){
+        myRandom = new Random(seed);
+    }
+    public void setTraining(String s) {
+        myText = s.trim();
+    }
+   
+    abstract public String getRandomText(int numChars);
+    
+   protected ArrayList<String>getFollows(String key){
+                
+         ArrayList<String> follows = new ArrayList<String>();
+       int keysize = key.length();
+         int pos = 0;
+        int index =0;
+    
+    for(int i =0;i<myText.length()-1;i++)
+   
+       {
+             index = myText.indexOf(key,pos);
+       
+             
+          if(index == -1){ 
+         
+            break;
+           
+        } 
+        if(index+key.length() > myText.length()-1){break;}
+         follows.add(myText.substring(index+keysize,index+(keysize+1)));
+         //follows.add(myText.substring(index+1,index+2));
+        //System.out.println("follows "+myText.substring(index+keysize,index+(keysize+1)));
+           pos=index+1; 
+       
+        
+        }       
+       return follows;
+    
+    
+    }
+
+}
