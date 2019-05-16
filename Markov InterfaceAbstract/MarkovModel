@@ -1,0 +1,56 @@
+
+/**
+ * MArkov Model class generates random text with keysize n which can be passed 
+ * during creating object of this class..
+ * 
+ * @author (Vidhi Javiya) 
+ * @version (May 2019)
+ */
+import java.util.Random;
+import java.util.*;
+import edu.duke.*;
+public class MarkovModel extends AbstractMarkovModel{
+   private int num;
+   
+   
+    public MarkovModel(int n) {
+        
+       num =n;
+    }
+    
+    public String getRandomText(int numChars){
+        // It should predict the next character, by finding all the 
+        //characters that follow the current character in the 
+        //training text, and then randomly picking one of them as
+        //the next character.
+      
+        if (myText == null){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+       // System.out.println(myText);
+        int index= myRandom.nextInt(myText.length()- num);
+        String key = myText.substring(index,index+num);
+       // System.out.println("key is  " +key);
+        sb.append(key);
+        for(int k=0; k < numChars-num; k++){
+            
+           ArrayList <String> follows = getFollows(key);
+            // System.out.println("key " + key+ "" + follows);
+           if(follows.size()==0){break;}
+         
+         index = myRandom.nextInt(follows.size());
+         //System.out.println("out of follows index "+index);
+         String next = follows.get(index);
+        // System.out.println();
+         sb.append(next);
+                  key= key.substring(1)+next;
+        }
+        return sb.toString();
+    }
+    
+     public String toString() {
+        return "MarkovModel of order " +num;
+    }
+}
+
