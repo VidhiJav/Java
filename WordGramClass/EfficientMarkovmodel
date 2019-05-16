@@ -1,0 +1,137 @@
+
+/**
+ * EfficientMarkovWord .This class creates HashMap for easy access of keys and its following
+ * arrayList of following words in order to generate random text.
+ * 
+ * @author (Vidhi Javiya) 
+ * @version (May 2019)
+ */
+
+import java.util.*;
+public class EfficientMarkovWord implements IMarkovModel{
+    private String[] myText;
+    private Random myRandom;
+    private int myOrder;
+    private HashMap<WordGram,ArrayList<String>> map;
+
+    public EfficientMarkovWord(int num){
+        myRandom = new Random();
+        myOrder = num;
+        map = new HashMap<WordGram, ArrayList<String>>();
+    }
+
+    public void setTraining(String text){
+        myText = text.split("\\s+");
+        text="this is a test yes this is really a test";
+        buildMap();
+        printHashMap();
+
+    }
+
+    public void setRandom(int seed) {
+        myRandom = new Random(seed);
+    }
+
+    // private void buildMap(){
+        // int pos =0;//order is num
+        // int index =0;//position is index
+        // while (index < myText.length-(myOrder))  {
+            // WordGram key = new WordGram(myText,index,myOrder);
+            // // String follow =myText.substring(index+key.length(),index+(key.length()+1));
+            // String next = myText[index+myOrder];
+            // if (!map.containsKey(key) && index + myOrder < myText.length){
+                // map.put(key,new ArrayList<String>(Arrays.asList(next)));
+
+            // }
+
+            // else if(map.containsKey(key) && index + myOrder < myText.length){
+                // ArrayList<String> list = map.get(key);
+                // list.add(next);
+                // map.replace(key,list);
+            // }
+
+            // else if (index + myOrder == myText.length){
+                // ArrayList<String> aslist =new ArrayList<String>();
+                // map.put(key, aslist);
+            // }
+
+            // index++;
+        // }
+
+    // }
+    
+    private ArrayList<String> getFollows(WordGram key) {
+        return map.get(key);
+    }
+
+    private void printHashMap(){
+        // for (WordGram key : map.keySet()) {
+            // System.out.printf("Key:\t[%s]\tvalues: ", key);
+            // System.out.println(map.get(key));
+        // }
+        System.out.println("Number of keys:\t"+map.keySet().size());
+
+        int maxSetSize = -1;
+
+        for (WordGram wg : map.keySet()) {
+            maxSetSize = Math.max(maxSetSize, map.get(wg).size());
+            System.out.println(wg+"\t: "+map.get(wg));
+        }
+        System.out.println("Max Set Size:\t"+maxSetSize);
+
+        System.out.println("Keys with Max Size:");
+
+        for (WordGram wg : map.keySet()) {
+            if (map.get(wg).size()==maxSetSize) 
+                System.out.println(wg);
+                // System.out.println("arraysize of max key "+ map.get(wg).size() );
+        }
+        
+    }
+       public void buildMap() {
+    	for(int i=0;i<myText.length-(myOrder-1);i++) {
+    		WordGram wg = new WordGram(myText,i,myOrder);
+    		String next = "";
+			if(i+myOrder<myText.length)
+				next = myText[i+myOrder];
+    		if (map.containsKey(wg)) {
+    			map.get(wg).add(next);
+    		}
+    		else {
+    			ArrayList<String> list = new ArrayList<String>();
+    			list.add(next);
+    			map.put(wg, list);
+    		}
+    	}
+    }
+
+    public String getRandomText(int numWords){
+
+        if (myText == null){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+
+        int index = myRandom.nextInt(myText.length-myOrder);
+        WordGram key = new WordGram (myText,index,myOrder);
+        // System.out.println("key is  " +key);
+        sb.append(key.toString());
+        for(int k=0; k < numWords-myOrder; k++){
+
+            ArrayList <String> follows = getFollows(key);
+            // System.out.println("key " + key+ "" + follows);
+            if(follows.size()==0 || follows == null){break;}
+
+            index = myRandom.nextInt(follows.size());
+
+            String next = follows.get(index);
+
+            sb.append(next);
+            sb.append(" ");
+
+            key= key.shiftAdd(next);
+        }
+        return sb.toString();
+    }
+}
+
