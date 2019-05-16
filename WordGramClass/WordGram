@@ -1,0 +1,73 @@
+
+//Class WordGram. To design and implement word sequence.
+//Analog of string as character sequence.
+
+
+public class WordGram {
+    private String[] myWords;
+    private int myHash;
+
+    public WordGram(String[] source, int start, int size) {
+        myWords = new String[size];
+        System.arraycopy(source, start, myWords, 0, size);
+    }
+
+    public String wordAt(int index) {
+        if (index < 0 || index >= myWords.length) {
+            throw new IndexOutOfBoundsException("bad index in wordAt "+index);
+        }
+        return myWords[index];
+    }
+
+    public int length(){
+        
+        return myWords.length;
+    }
+
+    public String toString(){
+        String ret = "";
+        for(int i=0;i<myWords.length;i++){
+       ret += myWords[i]+" ";
+    }
+              return ret.trim();
+    }
+
+    public boolean equals(Object o) {
+        WordGram other = (WordGram) o;
+       if(this.length() != other.length()){return false;}
+       for(int k =0;k<myWords.length;k++){
+        if(!myWords[k].equals(other.wordAt(k))){return false;}
+        }
+        return true;
+
+    }
+
+    public WordGram shiftAdd(String word) {	
+       
+           int last = myWords.length;
+        String[] newArray= new String[last];
+        // shift all words one towards 0 and add word at the end. 
+        // you lose the first word
+        // TODO: Complete this method
+    
+        for(int i=0;i<last-1;i++){
+          myWords[i]=myWords[i+1];
+         
+          newArray[i]=myWords[i];
+          
+        }
+         newArray[last-1]=word;
+          WordGram out = new WordGram(newArray, 0, myWords.length);
+        return out;
+    }
+
+    
+    // you will need to add a method named hashCode that has no parameters.
+    //This method should return an integer that is a hash code that represents
+    //the WordGram. Note that String has a method hashCode. You may want to
+    //create a String from the WordGram and use the String hashCode method.
+    public int hashCode(){
+    return this.toString().hashCode();
+    
+    }
+}
