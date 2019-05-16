@@ -1,0 +1,16 @@
+
+/**
+ * interface IMarkovModel with the signature of 3 methods.
+ * 
+ * @author (Vidhi Javiya) 
+ * @version (May 2019)
+ */
+
+public interface IMarkovModel {
+    public void setTraining(String text);
+    
+    public void setRandom(int seed);
+    
+     public String getRandomText(int numWords);
+
+}
